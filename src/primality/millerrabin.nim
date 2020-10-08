@@ -12,13 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from math import `^`
+import modular
 
 type
   Primality* {.pure.} = enum
     composite
     prime
     neitherPrimeNorComposite # just 1
+    probablyPrime
 
   OddFactorResult[T: SomeInteger] = tuple
     oddFactor, exponentOnBase2: T
@@ -45,15 +46,55 @@ func getOddFactor[T: SomeInteger](n: T): OddFactorResult[T] =
   assert(result.exponentOnBase2 > 0)
   assert(invariantCondition)
 
-proc millerRabinTest(n: SomeInteger): Primality =
+iterator sprpBases[T: SomeInteger](n: T): T =
+  let bases =
+    when sizeof(T) <= 1: @[2]
+    elif sizeof(T) <= 2:
+      if n < T(2_047): @[2]
+      else: @[2, 3]
+    elif sizeof(T) <= 4:
+      if n < T(2_047): @[2]
+      elif n < T(9_080_191): @[31, 73]
+      else: @[2, 7, 61]
+    else:
+      if n < T(2_047): @[2]
+      elif n < T(4_759_123_141): @[2, 7, 61]
+      else: @[2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]
+
+  for base in bases:
+    yield T(base)
+
+proc millerRabinPass[T: SomeInteger](n, d, s, base: T): Primality =
+  result = Primality.composite
+  var x = expMod(base, d, n)
+
+  if x == T(1) or x == n - T(1):
+    return Primality.probablyPrime
+
+  for i in 1..<int(s):
+    x = multMod(x, x, n)
+
+    if x == n - T(1):
+      return Primality.probablyPrime
+
+proc millerRabinTest[T: SomeInteger](n: T): Primality =
   assert((n >= 3) and n.isOdd,
     "The Miller-Rabin primality test is suitable for only odd numbers greater than or equal 3.")
 
-  result = Primality.prime
+  let (d, s) = getOddFactor(n - 1)
 
-  # TODO: impl.
+  for base in sprpBases(n):
+    result = millerRabinPass(n, d, s, base)
+
+    echo "n = ", n, ", base = ", base, " ... ", result
+
+    if result == Primality.composite: break
+
+  if result == Primality.probablyPrime:
+    result = Primality.prime
 
   assert(result != Primality.neitherPrimeNorComposite)
+  assert(result != Primality.probablyPrime)
 
 proc checkPrimality*(n: SomeInteger): Primality =
   result = if n < 2: Primality.neitherPrimeNorComposite
