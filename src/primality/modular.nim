@@ -44,3 +44,16 @@ func multMod*[T: SomeInteger](x, y, modulus: T): T =
 
     s = s shr 1
     r = doubleMod(r, modulus)
+
+func expMod*[T: SomeInteger](x, y, modulus: T): T =
+  result = T(1)
+  var
+    s = y
+    r = x mod modulus
+
+  while s != T(0):
+    if (s and T(1)) != 0:
+      result = result.multMod(r, modulus)
+
+    s = s shr 1
+    r = r.multMod(r, modulus)

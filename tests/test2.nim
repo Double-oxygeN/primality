@@ -21,3 +21,10 @@ suite "Modular calculation tests":
     check(multMod(12, 34, 56) == 16)
     check(multMod(118'i8, 117'i8, 120'i8) == 6'i8)
     check(multMod(238'u8, 247'u8, 250'u8) == 36'u8)
+
+  test "expMod":
+    check(expMod(2, 20, 2_000_000) == 1_048_576)
+    check(expMod(2, 20, 555) == 181)
+    check(expMod(3, 5, 753) == 243)
+    check(expMod(3, 3, 7) == 6)
+    check(expMod(54'i8, 32'i8, 43'i8) == 21'i8)
