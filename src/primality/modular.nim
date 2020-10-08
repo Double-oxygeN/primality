@@ -21,3 +21,13 @@ func addMod*[T: SomeInteger](x, y, modulus: T): T =
 
     else:
       (x + y) mod modulus
+
+func doubleMod*[T: SomeInteger](x, modulus: T): T =
+  let overflowMask = succ(high(T) shr 1)
+
+  result =
+    if (x and overflowMask) == 0:
+      (x shl 1) mod modulus
+
+    else:
+      (((x xor overflowMask) shl 1) + succ(high(T) mod modulus)) mod modulus
