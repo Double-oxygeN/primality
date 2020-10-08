@@ -13,6 +13,8 @@
 # limitations under the License.
 
 func addMod*[T: SomeInteger](x, y, modulus: T): T =
+  assert(x >= 0 and y >= 0 and modulus > 1)
+
   let overflowLimit = high(T) - x
 
   result =
@@ -23,6 +25,8 @@ func addMod*[T: SomeInteger](x, y, modulus: T): T =
       (x + y) mod modulus
 
 func doubleMod*[T: SomeInteger](x, modulus: T): T =
+  assert(x >= 0 and modulus > 1)
+
   let overflowMask = succ(high(T) shr 1)
 
   result =
@@ -33,6 +37,8 @@ func doubleMod*[T: SomeInteger](x, modulus: T): T =
       (((x xor overflowMask) shl 1) + succ(high(T) mod modulus)) mod modulus
 
 func multMod*[T: SomeInteger](x, y, modulus: T): T =
+  assert(x >= 0 and y >= 0 and modulus > 1)
+
   result = T(0)
   var
     s = y mod modulus
@@ -46,6 +52,8 @@ func multMod*[T: SomeInteger](x, y, modulus: T): T =
     r = doubleMod(r, modulus)
 
 func expMod*[T: SomeInteger](x, y, modulus: T): T =
+  assert(x >= 0 and y >= 0 and modulus > 1)
+
   result = T(1)
   var
     s = y
