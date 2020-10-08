@@ -2,7 +2,7 @@ import unittest
 
 include primality/millerrabin
 
-suite "Miller-Rabin primality test":
+suite "Miller-Rabin primality tests":
   test "isOdd":
     for x in 0..4:
       check(isOdd(int8(x) * 2 + 1))
