@@ -31,3 +31,16 @@ func doubleMod*[T: SomeInteger](x, modulus: T): T =
 
     else:
       (((x xor overflowMask) shl 1) + succ(high(T) mod modulus)) mod modulus
+
+func multMod*[T: SomeInteger](x, y, modulus: T): T =
+  result = T(0)
+  var
+    s = y mod modulus
+    r = x mod modulus
+
+  while s != T(0):
+    if (s and T(1)) != 0:
+      result = result.addMod(r, modulus)
+
+    s = s shr 1
+    r = doubleMod(r, modulus)
