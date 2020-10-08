@@ -8,6 +8,7 @@ suite "Modular calculation tests":
     check(addMod(20, 30, 40) == 10)
     check(addMod(120'i8, 120'i8, 127'i8) == 113'i8)
     check(addMod(240'u8, 240'u8, 255'u8) == 225'u8)
+    check(addMod(96'i8, 48'i8, 97'i8) == 47'i8)
 
   test "doubleMod":
     check(doubleMod(20, 50) == 40)
