@@ -27,7 +27,7 @@ func addMod*[T: SomeInteger](x, y, modulus: T): T =
 func doubleMod*[T: SomeInteger](x, modulus: T): T =
   assert(x >= 0 and modulus > 1)
 
-  let overflowMask = succ(high(T) shr 1)
+  const overflowMask = succ(high(T) shr 1)
 
   result =
     if (x and overflowMask) == 0:

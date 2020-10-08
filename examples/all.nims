@@ -1,4 +1,4 @@
-# Copyright 2020 double-oxygen
+# Copyright 2020 Double-oxygeN
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

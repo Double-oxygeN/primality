@@ -12,29 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import random
-import primality/millerrabin
+import primality
 
-export randomize
+proc echoPrimality(n: int) =
+  if n.isPrime:
+    echo n, " is a prime number"
 
+  elif n.isComposite:
+    echo n, " is a composite number"
 
-proc isPrime*(n: SomeInteger): bool =
-  result = checkPrimality(n) == Primality.prime
+randomize()
 
+let
+  x1 = genRandomPrime(100..150)
+  x2 = genRandomPrime(100..150)
 
-proc isComposite*(n: SomeInteger): bool =
-  result = checkPrimality(n) == Primality.composite
-
-
-proc genRandomPrime*[T: SomeInteger](x: Slice[T]): T =
-  while not result.isPrime:
-    result = rand(x)
-
-
-proc genRandomPrime*[T: SomeInteger](ty: typedesc[T]): T =
-  while not result.isPrime:
-    result = rand(ty)
-
-
-proc genRandomPrime*(x: int): int =
-  genRandomPrime(2..x)
+echoPrimality x1
+echoPrimality x2
+echoPrimality x1 * x2
