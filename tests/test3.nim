@@ -3,6 +3,22 @@ import unittest
 import primality
 
 suite "Primality":
+  test "checkPrimality":
+    check(checkPrimality(2) == Primality.prime)
+    check(checkPrimality(3) == Primality.prime)
+    check(checkPrimality(5) == Primality.prime)
+    check(checkPrimality(7) == Primality.prime)
+
+    check(checkPrimality(4) == Primality.composite)
+    check(checkPrimality(9) == Primality.composite)
+    check(checkPrimality(15) == Primality.composite)
+    check(checkPrimality(49) == Primality.composite)
+
+    check(checkPrimality(1) == Primality.neitherPrimeNorComposite)
+    check(checkPrimality(0) == Primality.neitherPrimeNorComposite)
+    check(checkPrimality(-1) == Primality.neitherPrimeNorComposite)
+    check(checkPrimality(-2) == Primality.neitherPrimeNorComposite)
+
   test "isPrime":
     check(isPrime(2))
     check(isPrime(3))

@@ -24,8 +24,8 @@ type
   OddFactorResult[T: SomeInteger] = tuple
     oddFactor, exponentOnBase2: T
 
-func isOdd(x: SomeInteger): bool {.inline.} = (x and 1) == 1
-template isEven(x: SomeInteger): bool = not isOdd(x)
+func isOdd*(x: SomeInteger): bool {.inline.} = (x and 1) == 1
+template isEven*(x: SomeInteger): bool = not isOdd(x)
 
 func getOddFactor[T: SomeInteger](n: T): OddFactorResult[T] =
   assert((n >= 2) and n.isEven,
@@ -77,7 +77,7 @@ proc millerRabinPass[T: SomeInteger](n, d, s, base: T): Primality =
     if x == n - T(1):
       return Primality.probablyPrime
 
-proc millerRabinTest[T: SomeInteger](n: T): Primality =
+proc millerRabinTest*[T: SomeInteger](n: T): Primality =
   assert((n >= 3) and n.isOdd,
     "The Miller-Rabin primality test is suitable for only odd numbers greater than or equal 3.")
 
@@ -93,9 +93,3 @@ proc millerRabinTest[T: SomeInteger](n: T): Primality =
 
   assert(result != Primality.neitherPrimeNorComposite)
   assert(result != Primality.probablyPrime)
-
-proc checkPrimality*(n: SomeInteger): Primality =
-  result = if n < 2: Primality.neitherPrimeNorComposite
-    elif n == 2: Primality.prime
-    elif n.isEven: Primality.composite
-    else: millerRabinTest(n)

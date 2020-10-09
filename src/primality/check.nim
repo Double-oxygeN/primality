@@ -14,6 +14,15 @@
 
 import private/millerrabin
 
+export Primality
+
+
+proc checkPrimality*(n: SomeInteger): Primality =
+  result = if n < 2: Primality.neitherPrimeNorComposite
+    elif n == 2: Primality.prime
+    elif n.isEven: Primality.composite
+    else: millerRabinTest(n)
+
 
 proc isPrime*(n: SomeInteger): bool =
   ## Check if the argument is prime.

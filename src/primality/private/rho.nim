@@ -18,7 +18,7 @@ import modular
 func f[T: SomeInteger](x, modulus: T): T {.inline.} =
   succ(multMod(x, x, modulus)) mod modulus
 
-proc pollardsRho[T: SomeInteger](n: T): T =
+proc pollardsRho*[T: SomeInteger](n: T): T =
   # Pollard's ρ algorithm
   # Returns a prime factor, or ``n`` itself.
 
@@ -34,4 +34,4 @@ proc pollardsRho[T: SomeInteger](n: T): T =
     let diff = if singleStep > doubleStep: singleStep - doubleStep else: doubleStep - singleStep
 
     result = gcd(diff, n)
-    echo "[debug] ", singleStep, ", ", doubleStep, ", ", result
+    # echo "[debug] ", singleStep, ", ", doubleStep, ", ", result
