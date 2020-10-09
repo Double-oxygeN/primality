@@ -12,25 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import primality, primality/random
+import check
 
-proc echoPrimality(n: int) =
-  if n.isPrime:
-    echo n, " is a prime number"
+iterator primes*[T: SomeInteger](x: Slice[T]): T =
+  ## Iterates over each primes between ``x``.
 
-  elif n.isComposite:
-    echo n, " is a composite number"
+  for p in x:
+    if isPrime(p): yield p
 
-randomize()
 
-let
-  x1 = genRandomPrime(100..150)
-  x2 = genRandomPrime(100..150)
+iterator primes*[T: SomeInteger](max: T): T =
+  ## Iterates over each primes up to ``max``.
 
-echoPrimality x1
-echoPrimality x2
-echoPrimality x1 * x2
-
-echo "Primes between ", min(x1, x2), " and ", max(x1, x2)
-for p in primes(min(x1, x2)..max(x1, x2)):
-  echo p
+  for p in T(2)..max:
+    if isPrime(p): yield p
