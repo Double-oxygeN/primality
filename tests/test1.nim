@@ -99,3 +99,4 @@ suite "Miller-Rabin primality tests":
 
     check(millerRabinTest(2_047'i16) == Primality.composite)
     check(millerRabinTest(2_047'i32) == Primality.composite)
+    check(millerRabinTest(3_825_123_056_546_413_051) == Primality.composite) # The most annoying example
