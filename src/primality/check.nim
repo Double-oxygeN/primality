@@ -12,5 +12,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import primality/check
-export check
+import private/millerrabin
+
+
+proc isPrime*(n: SomeInteger): bool =
+  ## Check if the argument is prime.
+  ## 
+  runnableExamples:
+    assert(isPrime(47))
+    assert(not isPrime(57))
+    assert(not isPrime(1))
+
+  result = checkPrimality(n) == Primality.prime
+
+
+proc isComposite*(n: SomeInteger): bool =
+  ## Check if the argument is composite number.
+  ## 
+  runnableExamples:
+    assert(isComposite(57))
+    assert(not isComposite(67))
+    assert(not isComposite(1))
+
+  result = checkPrimality(n) == Primality.composite
