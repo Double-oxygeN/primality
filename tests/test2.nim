@@ -1,6 +1,6 @@
 import unittest
 
-include primality/modular
+include primality/private/modular
 
 suite "Modular calculation tests":
   test "addMod":

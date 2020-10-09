@@ -1,6 +1,6 @@
 import unittest
 
-include primality/millerrabin
+include primality/private/millerrabin
 
 suite "Miller-Rabin primality tests":
   test "isOdd":

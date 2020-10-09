@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import random
-import primality/millerrabin
+import primality/private/millerrabin
 
 export randomize
 
