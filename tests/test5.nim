@@ -16,6 +16,8 @@ suite "Eratosthenes's sieve":
     check(sqrtInt(0xffff_ffff_ffff_ffff'u64) == 0xffff_ffff'u64)
 
   test "sieve":
+    check(eratosthenesSieve(2) == 2)
+    check(eratosthenesSieve(3) == 3)
     check(eratosthenesSieve(125) == 5)
     check(eratosthenesSieve(169) == 13)
     check(eratosthenesSieve(501_679) == 199)

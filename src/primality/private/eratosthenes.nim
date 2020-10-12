@@ -55,8 +55,10 @@ func sqrtInt[T: SomeInteger](x: T): T =
 proc eratosthenesSieve*[T: SomeInteger](n: T): T =
   ## Eratosthenes's sieve with wheel factorization
 
-  let upperBound = sqrtInt(n)
-  var sieve = toSeq(primeCandidates(T(2)..upperBound))
+  if n <= 3: return n
+
+  let ub = sqrtInt(n)
+  var sieve = toSeq(primeCandidates(T(2)..ub))
 
   while sieve.len > 0:
     if n mod sieve[0] == 0: break
