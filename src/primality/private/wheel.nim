@@ -56,7 +56,7 @@ iterator primeCandidates*[T: SomeInteger](x: Slice[T]): T =
     for b in basis:
       if T(b) in x: yield T(b)
 
-  if T(wheel[1]) < x.b:
+  if T(wheel[1]) <= x.b:
     const noRotateFlag = when sizeof(T) <= 2: int(high(T)) < wheelSize else: false
 
     template rotation(x: T): int =
