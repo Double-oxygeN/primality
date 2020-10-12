@@ -13,25 +13,31 @@
 # limitations under the License.
 
 import check
+import private/wheel
 
 iterator primes*[T: SomeInteger](x: Slice[T]): T =
   ## Iterates over each primes between ``x``.
 
-  if T(2) in x:
-    yield T(2)
-
-    for p in countup(T(3), x.b, T(2)):
-      if isPrime(p): yield p
-
-  else:
-    for p in countup((x.a div T(2)) * T(2) + 1, x.b, T(2)):
-      if isPrime(p): yield p
+  for p in primeCandidates(x):
+    if p.isPrime: yield p
 
 
 iterator primes*[T: SomeInteger](max: T): T =
   ## Iterates over each primes up to ``max``.
 
-  if T(2) <= max: yield T(2)
+  for p in primeCandidates(T(2)..max):
+    if p.isPrime: yield p
 
-  for p in countup(T(3), max, T(2)):
-    if isPrime(p): yield p
+
+iterator composites*[T: SomeInteger](x: Slice[T]): T =
+  ## Iterates over each composite numbers between ``x``.
+
+  for c in x:
+    if c.isComposite: yield c
+
+
+iterator composites*[T: SomeInteger](max: T): T =
+  ## Iterates over each composite numbers up to ``max``.
+
+  for c in T(4)..max:
+    if c.isComposite: yield c
