@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from bitops import countTrailingZeroBits
 import modular
 
 type
@@ -21,30 +22,8 @@ type
     neitherPrimeNorComposite # just 1
     probablyPrime
 
-  OddFactorResult[T: SomeInteger] = tuple
-    oddFactor, exponentOnBase2: T
-
 func isOdd*(x: SomeInteger): bool {.inline.} = (x and 1) == 1
 template isEven*(x: SomeInteger): bool = not isOdd(x)
-
-func getOddFactor[T: SomeInteger](n: T): OddFactorResult[T] =
-  assert((n >= 2) and n.isEven,
-    "Only even numbers greater than or equal 2 are allowed as the argument of getOddFactor.")
-
-  result.oddFactor = n
-
-  template invariantCondition: bool =
-    n == result.oddFactor * (T(1) shl result.exponentOnBase2)
-
-  while not result.oddFactor.isOdd:
-    result.oddFactor = result.oddFactor shr 1
-    inc result.exponentOnBase2
-
-    assert(invariantCondition)
-
-  assert((result.oddFactor > 0) and result.oddFactor.isOdd)
-  assert(result.exponentOnBase2 > 0)
-  assert(invariantCondition)
 
 iterator sprpBases[T: SomeInteger](n: T): T =
   let bases =
@@ -81,7 +60,9 @@ proc millerRabinTest*[T: SomeInteger](n: T): Primality =
   assert((n >= 3) and n.isOdd,
     "The Miller-Rabin primality test is suitable for only odd numbers greater than or equal 3.")
 
-  let (d, s) = getOddFactor(n - 1)
+  let
+    s = T(countTrailingZeroBits(pred(n)))
+    d = pred(n) shr s
 
   for base in sprpBases(n):
     result = millerRabinPass(n, d, s, base)

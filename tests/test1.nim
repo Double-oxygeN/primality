@@ -25,24 +25,6 @@ suite "Miller-Rabin primality tests":
 
     check(isEven(low(int64)))
 
-  test "getOddFactor":
-    let (d1, s1) = getOddFactor(2)
-    check(d1 == 1)
-    check(s1 == 1)
-
-    let (d2, s2) = getOddFactor(2820)
-    check(d2 == 705)
-    check(s2 == 2)
-
-    let (d3, s3) = getOddFactor(0x9000_0000_0000_0000'u64)
-    check(d3 == 9'u64)
-    check(s3 == 60'u64)
-
-    expect AssertionError: discard getOddFactor(3)
-    expect AssertionError: discard getOddFactor(1)
-    expect AssertionError: discard getOddFactor(0)
-    expect AssertionError: discard getOddFactor(-2820)
-
   test "primes":
     check(millerRabinTest(3) == Primality.prime)
     check(millerRabinTest(5) == Primality.prime)
