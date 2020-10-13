@@ -41,8 +41,6 @@ proc primeFactorization*[T: SomeInteger](n: T): seq[T] =
     numRho = numRho div factorsRho[^1]
     factorsRho.add pollardsRho(numRho)
 
-  echo factorsRho
-
   if factorsRho.all(isPrime):
     result.add factorsRho
     return
