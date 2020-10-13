@@ -3,3 +3,4 @@
 bin/
 tests/test*
 !tests/*.nim
+benchmark/
