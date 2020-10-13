@@ -63,6 +63,16 @@ proc primeFactorization*[T: SomeInteger](n: T): seq[T] =
 
 
 when isMainModule:
-  from strutils import join
+  from strutils import join, parseBiggestUInt
+  from os import paramStr, paramCount
 
-  echo (high(uint64) - 2).primeFactorization().join(" * ")
+  if paramCount() >= 1:
+    try:
+      let num = paramStr(1).parseBiggestUInt()
+      echo num, " = ", num.primeFactorization().join(" * ")
+
+    except ValueError:
+      echo "not a number"
+
+  else:
+    echo "an argument needed"

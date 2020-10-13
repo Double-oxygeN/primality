@@ -12,5 +12,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import primality/[check, iterators]
-export check, iterators
+import primality/[check, iterators, factorization]
+export check, iterators, factorization
