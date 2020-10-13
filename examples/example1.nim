@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from strutils import join
+from sequtils import toSeq
 import primality, primality/random
 
 proc echoPrimality(n: int) =
@@ -20,17 +22,16 @@ proc echoPrimality(n: int) =
 
   elif n.isComposite:
     echo n, " is a composite number"
+    echo n, " = ", primeFactorization(n).join(" * ")
 
 randomize()
 
 let
-  x1 = genRandomPrime(100..150)
-  x2 = genRandomPrime(100..150)
+  x1 = genRandomPrime(10_000..60_000)
+  x2 = genRandomPrime(10_000..60_000)
 
 echoPrimality x1
 echoPrimality x2
 echoPrimality x1 * x2
 
-echo "Primes between ", min(x1, x2), " and ", max(x1, x2)
-for p in primes(min(x1, x2)..max(x1, x2)):
-  echo p
+echo "There are ", toSeq(primes(min(x1, x2)..max(x1, x2))).len, " primes between ", min(x1, x2), " and ", max(x1, x2)
